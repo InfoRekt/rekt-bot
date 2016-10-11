@@ -6,7 +6,7 @@ from __future__ import unicode_literals, absolute_import, print_function, divisi
 
 import re
 from sopel import formatting
-from sopel.module import commands, priority, OP, HALFOP, require_privilege, require_chanmsg
+from sopel.module import commands, priority, OP, HALFOP, require_privilege, require_chanmsg, require_admin
 from sopel.tools import Identifier
 
 
@@ -20,7 +20,8 @@ def default_mask(trigger):
 
 
 @require_chanmsg
-@require_privilege(OP, 'You are not a channel operator.')
+@require_admin
+#@require_privilege(OP, 'You are not a channel operator.')
 @commands('kick')
 @priority('high')
 def kick(bot, trigger):
@@ -71,7 +72,8 @@ def configureHostMask(mask):
 
 
 @require_chanmsg
-@require_privilege(OP, 'You are not a channel operator.')
+@require_admin
+#@require_privilege(OP, 'You are not a channel operator.')
 @commands('ban')
 @priority('high')
 def ban(bot, trigger):
@@ -100,7 +102,8 @@ def ban(bot, trigger):
 
 
 @require_chanmsg
-@require_privilege(OP, 'You are not a channel operator.')
+@require_admin
+#@require_privilege(OP, 'You are not a channel operator.')
 @commands('unban')
 def unban(bot, trigger):
     """
@@ -128,7 +131,8 @@ def unban(bot, trigger):
 
 
 @require_chanmsg
-@require_privilege(OP, 'You are not a channel operator.')
+@require_admin
+#@require_privilege(OP, 'You are not a channel operator.')
 @commands('quiet')
 def quiet(bot, trigger):
     """
@@ -156,7 +160,8 @@ def quiet(bot, trigger):
 
 
 @require_chanmsg
-@require_privilege(OP, 'You are not a channel operator.')
+@require_admin
+#@require_privilege(OP, 'You are not a channel operator.')
 @commands('unquiet')
 def unquiet(bot, trigger):
     """
@@ -184,7 +189,8 @@ def unquiet(bot, trigger):
 
 
 @require_chanmsg
-@require_privilege(OP, 'You are not a channel operator.')
+@require_admin
+#@require_privilege(OP, 'You are not a channel operator.')
 @commands('kickban', 'kb')
 @priority('high')
 def kickban(bot, trigger):
@@ -220,7 +226,8 @@ def kickban(bot, trigger):
 
 
 @require_chanmsg
-@require_privilege(OP, 'You are not a channel operator.')
+@require_admin
+#@require_privilege(OP, 'You are not a channel operator.')
 @commands('topic')
 def topic(bot, trigger):
     """
