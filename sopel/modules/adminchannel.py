@@ -48,6 +48,63 @@ def kick(bot, trigger):
     if nick != bot.config.core.nick:
         bot.write(['KICK', channel, nick], reason)
 
+@require_chanmsg
+@require_admin
+#@require_privilege(OP, 'You are not a channel operator.')
+@commands('op')
+@priority('high')
+def op(bot, trigger):
+    """
+    Op a user.
+    """
+    if bot.privileges[trigger.sender][bot.nick] < HALFOP:
+        return bot.reply("I'm not a channel operator!")
+    text = trigger.group().split()
+    argc = len(text)
+    if argc < 2:
+        return
+    opt = Identifier(text[1])
+    nick = opt
+    channel = trigger.sender
+    reasonidx = 2
+    if not opt.is_nick():
+        if argc < 3:
+            return
+        nick = text[2]
+        channel = opt
+        reasonidx = 3
+    reason = ' '.join(text[reasonidx:])
+    if nick != bot.config.core.nick:
+        bot.write(['MODE', channel, '+o', nick])
+
+@require_chanmsg
+@require_admin
+#@require_privilege(OP, 'You are not a channel operator.')
+@commands('deop')
+@priority('high')
+def deop(bot, trigger):
+    """
+    deOp a user.
+    """
+    if bot.privileges[trigger.sender][bot.nick] < HALFOP:
+        return bot.reply("I'm not a channel operator!")
+    text = trigger.group().split()
+    argc = len(text)
+    if argc < 2:
+        return
+    opt = Identifier(text[1])
+    nick = opt
+    channel = trigger.sender
+    reasonidx = 2
+    if not opt.is_nick():
+        if argc < 3:
+            return
+        nick = text[2]
+        channel = opt
+        reasonidx = 3
+    reason = ' '.join(text[reasonidx:])
+    if nick != bot.config.core.nick:
+        bot.write(['MODE', channel, '-o', nick])
 
 def configureHostMask(mask):
     if mask == '*!*@*':
