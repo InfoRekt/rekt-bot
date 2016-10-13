@@ -56,12 +56,9 @@ def learn(bot, trigger):
 @rule('!(.+)')
 @priority('low')
 def say_learn(bot, trigger):
-    print (trigger)
     keyword = trigger.group(1)
-    print(keyword)
     result = bot.db.execute('SELECT * FROM learn WHERE keyword=?', (keyword,))
     found = result.fetchone()
-    print (found)
     if found:
         definitions = found[1].split('\t')
         defs = ""
@@ -75,7 +72,6 @@ def say_learn(bot, trigger):
 @require_admin
 @commands('forget')
 def forget(bot, trigger):
-    print('forgetting')
     if not trigger.group(2):
         bot.say('What do you want me to forget?')
         return
