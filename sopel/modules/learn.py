@@ -25,7 +25,7 @@ def learn(bot, trigger):
         bot.say("learn <what> as <definition> - Educate me.")
         return
 
-    regex = re.compile(r'(.+) as (.+)')
+    regex = re.compile(r'(\S+) as (.+)')
     matches = regex.match(trigger.group(2).strip())
     if not matches or len(matches.groups()) != 2:
         bot.say("learn <what> as <definition> - Educate me.")
@@ -53,12 +53,15 @@ def learn(bot, trigger):
 
 
 @thread(False)
-@rule('!(.*)')
+@rule('!(.+)')
 @priority('low')
 def say_learn(bot, trigger):
+    print (trigger)
     keyword = trigger.group(1)
+    print(keyword)
     result = bot.db.execute('SELECT * FROM learn WHERE keyword=?', (keyword,))
     found = result.fetchone()
+    print (found)
     if found:
         definitions = found[1].split('\t')
         defs = ""
