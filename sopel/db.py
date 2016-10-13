@@ -95,6 +95,11 @@ class SopelDB(object):
             '(channel STRING, key STRING, value STRING, '
             'PRIMARY KEY (channel, key))'
         )
+        self.execute(
+	    'CREATE TABLE learn '
+            '(keyword STRING, definition STRING, '
+            'PRIMARY KEY (keyword))'
+        )
 
     def get_uri(self):
         """Returns a URL for the database, usable to connect with SQLAlchemy.
