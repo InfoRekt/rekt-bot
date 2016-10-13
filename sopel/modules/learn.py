@@ -34,11 +34,11 @@ def learn(bot, trigger):
     keyword = matches.group(1)
     definition = matches.group(2)
 
-    result = bot.db.execute('SELECT * FROM learn WHERE keyword="%s"' % keyword)
+    result = bot.db.execute('SELECT * FROM learn WHERE keyword = ?', (keyword,))
     found = result.fetchone()
     if not found:
         bot.db.execute('INSERT INTO learn (keyword, definition) '
-                       'VALUES ("%s", "%s")' % (keyword, definition))
+                       'VALUES (?, ?)', (keyword, definition))
         bot.say('Added %s as %s' % (keyword, definition))
     else:
         old_defs = found[1].split('\t')
@@ -47,8 +47,8 @@ def learn(bot, trigger):
             return
 
         new_def = '\t'.join( (found[1], definition) )
-        bot.db.execute('UPDATE learn SET definition="%s" '
-                       'WHERE keyword="%s"' % (new_def, keyword))
+        bot.db.execute('UPDATE learn SET definition=? '
+                       'WHERE keyword=?', (new_def, keyword))
         bot.say('Learned %s as %s' % (keyword, definition))
 
 
@@ -57,7 +57,7 @@ def learn(bot, trigger):
 @priority('low')
 def say_learn(bot, trigger):
     keyword = trigger.group(1)
-    result = bot.db.execute('SELECT * FROM learn WHERE keyword="%s"' % keyword)
+    result = bot.db.execute('SELECT * FROM learn WHERE keyword=?', (keyword,))
     found = result.fetchone()
     if found:
         definitions = found[1].split('\t')
@@ -85,7 +85,7 @@ def forget(bot, trigger):
 
     keyword = matches.group(1)
     index = int(matches.group(2))
-    result = bot.db.execute('SELECT * FROM learn WHERE keyword="%s"' % keyword)
+    result = bot.db.execute('SELECT * FROM learn WHERE keyword=?', (keyword,))
     found = result.fetchone()
     if not found:
         bot.say('I don`t know anything about %s' % keyword)
@@ -99,8 +99,8 @@ def forget(bot, trigger):
         return
 
     new_def = '\t'.join(defs)
-    bot.db.execute('UPDATE learn SET definition="%s" '
-                   'WHERE keyword="%s"' % (new_def, keyword))
+    bot.db.execute('UPDATE learn SET definition=? '
+                   'WHERE keyword=?', (new_def, keyword))
     bot.say('Forgot %s as %s' % (keyword, forgotten))
 
 
