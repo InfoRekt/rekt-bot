@@ -113,6 +113,8 @@ def title_auto(bot, trigger):
     where the URL redirects to and show the title for that (or call a function
     from another module to give more information).
     """
+    if trigger.sender not bot.config.core.nick:
+        return
     if re.match(bot.config.core.prefix + 'title', trigger):
         return
 
@@ -183,7 +185,10 @@ def check_callbacks(bot, trigger, url, run=True):
 
 def find_title(url, verify=True):
     """Return the title for the given URL."""
-    response = requests.get(url, stream=True, verify=verify)
+    headers = {
+              'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64)'
+              }
+    response = requests.get(url, stream=True, verify=verify, headers=headers)
     try:
         content = ''
         for byte in response.iter_content(chunk_size=512, decode_unicode=True):

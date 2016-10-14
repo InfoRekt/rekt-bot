@@ -3,7 +3,7 @@
 # Author: Elsie Powell http://embolalia.com
 from __future__ import unicode_literals, absolute_import, print_function, division
 
-from sopel import web
+import requests
 from sopel.module import commands
 
 
@@ -25,12 +25,14 @@ def isup(bot, trigger):
         site += ".com"
 
     try:
-        response = web.get(site)
-    except Exception:
-        bot.say(site + ' looks down from here.')
-        return
+        r = requests.get(site)
+    except requests.exceptions.ConnectionError:
+        bot.say(site + ' looks down to me')
 
-    if response:
+    if r.status_code == 200:
         bot.say(site + ' looks fine to me.')
+    elif r.status_code == 404:
+        bot.say(site + ' looks ok, but returning 404')
     else:
-        bot.say(site + ' is down from here.')
+        bot.say(site + ' looks down to me')
+
