@@ -113,7 +113,7 @@ def title_auto(bot, trigger):
     where the URL redirects to and show the title for that (or call a function
     from another module to give more information).
     """
-    if trigger.sender not bot.config.core.nick:
+    if trigger.sender == bot.config.core.nick:
         return
     if re.match(bot.config.core.prefix + 'title', trigger):
         return
