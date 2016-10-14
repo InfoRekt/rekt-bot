@@ -97,9 +97,13 @@ def forget(bot, trigger):
         bot.say('Not a valid index')
         return
 
-    new_def = '\t'.join(defs)
-    bot.db.execute('UPDATE learn SET definition=? '
-                   'WHERE keyword=?', (new_def, keyword))
+    if defs:
+        new_def = '\t'.join(defs)
+        bot.db.execute('UPDATE learn SET definition=? '
+                       'WHERE keyword=?', (new_def, keyword))
+    else:
+        bot.db.execute('DELETE FROM learn WHERE keyword=?', (keyword,))
+
     bot.say('Forgot %s as %s' % (keyword, forgotten))
 
 
