@@ -107,3 +107,15 @@ def forget(bot, trigger):
     bot.say('Forgot %s as %s' % (keyword, forgotten))
 
 
+@commands('learned')
+def learned(bot, trigger):
+    bot.reply("Sending my knowledge via private message")
+    result = bot.db.execute('SELECT keyword FROM learn')
+    found = result.fetchall()
+    bot.say("I know about:", trigger.nick)
+    if not found:
+        bot.say("nothing. Derp Derp", trigger.nick)
+    else:
+        for f in found:
+            print (f)
+            bot.say(f[0], trigger.nick)
