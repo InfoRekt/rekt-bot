@@ -12,20 +12,24 @@ from sopel.module import commands, example
 import random
 import sys
 import os
+import codecs
 
 def get_quote(who):
     quote_dir = "/home/unlogic/quotes/"
-    with open(os.path.join (quote_dir, who)) as fh:
-        quotes = fh.readlines()
+    with codecs.open(os.path.join (quote_dir, who), encoding='utf-8') as fh:
+        quotes = []
+        for line in fh:
+            quotes.append(line)
 
     random.seed()
     select = random.randint(0, len(quotes) - 1)
+    print (quotes[select])
     return quotes[select]
 
 
 @commands('sgarbi')
 def sgarbi(bot, trigger):
-    bot.say(u"Sgarbi says: %s" % get_quote('sgarbi.txt').encode('utf8', 'replace'))
+    bot.say(u"Sgarbi says: %s" % get_quote('sgarbi.txt'))
 
 
 if __name__ == "__main__":
