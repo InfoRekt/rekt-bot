@@ -32,6 +32,15 @@ def sgarbi(bot, trigger):
     bot.say(u"Sgarbi says: %s" % get_quote('sgarbi.txt'))
 
 
+@commands('hicks')
+def hicks(bot, trigger):
+    bot.say(u"Bill Hicks says: %s" % get_quote('hicks.txt'))
+
+
+@commands('mcafee')
+def mcafee(bot, trigger):
+    bot.say(u"John McAfee says: %s" % get_quote('mcafee.txt'))
+
 if __name__ == "__main__":
     from sopel.test_tools import run_example_tests
     run_example_tests(__file__)
