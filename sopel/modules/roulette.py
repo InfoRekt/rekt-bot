@@ -16,7 +16,7 @@ def roulette(bot, trigger):
     channel = trigger.sender
     if number == 4:
         bot.say('BANG')
-        bot.write(['KICK', channel, nick, "You lose"])
+        bot.write(['KICK', channel, nick], "You lose")
     else:
         bot.say('CLICK')
 
